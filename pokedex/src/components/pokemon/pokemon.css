@@ -1,0 +1,50 @@
+.card{
+    width: 220px;
+    background: linear-gradient(to left, #aaa 50%, #4169E1 50%);
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.content{
+    width: 100%;
+}
+
+#pokemon_img{
+    width: 100%;
+    background-color: #aaa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+
+.footer_card{
+    padding: 0.3em 0.5em;
+    background-color: #4169E1;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+}
+
+.footer_card #name{
+    padding-top: 0.5em;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.footer_card .types{
+    gap: 0.5em;
+    display: flex;
+    padding: 0em 0em;
+}
+
+.footer_card .types li{
+    list-style: none;
+    width: 5em;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 0.1em .3em;
+}
