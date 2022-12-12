@@ -1,3 +1,1 @@
-export const environments = {
-    urlApiPokedex:''
-}
+export const urlApiPokedex = 'https://pokeapi.co/api/v2/pokemon';
