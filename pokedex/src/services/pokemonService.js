@@ -31,6 +31,21 @@ const getPokemonByidApi = async (idPokemon) =>{
     }
 }
 
+const getPokemonByidUri = async (uri) =>{
+    
+    try {
+
+        const res = await fetch(uri)
+        .then((res)=>res.json())
+        .catch((err)=> err);
+
+        return res;
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const pokemonService = {
     getPokemonsApi,
     getPokemonByidApi
