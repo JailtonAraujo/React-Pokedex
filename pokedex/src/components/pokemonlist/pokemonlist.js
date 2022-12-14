@@ -3,26 +3,17 @@ import styles from './pokemonlist.css'
 //components
 import Pokemon from '../pokemon/pokemon'
 
-const pokemonlist = ({list}) => {
+const Pokemonlist = ({pokemons}) => {
 
   return (
     <div className='contente-list'>
         <ul className="list">
-            <li> <Pokemon/> </li>
-            <li> <Pokemon/> </li>
-            <li> <Pokemon/> </li>
-            <li> <Pokemon/> </li>
-            <li> <Pokemon/> </li>
-            <li> <Pokemon/> </li>
-            <li> <Pokemon/> </li>
-            <li> <Pokemon/> </li>
-            <li> <Pokemon/> </li>
-            <li> <Pokemon/> </li>
-            <li> <Pokemon/> </li>
-            <li> <Pokemon/> </li>
+          {pokemons && pokemons.map((pokemon)=>(
+            <li> <Pokemon poke={pokemon}/> </li>
+          ))}
         </ul>
     </div>
   )
 }
 
-export default pokemonlist
+export default Pokemonlist

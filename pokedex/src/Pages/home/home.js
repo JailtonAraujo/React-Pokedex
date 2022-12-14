@@ -4,7 +4,8 @@ import syles from './home.css'
 import Pokemonlist from '../../components/pokemonlist/pokemonlist'
 
 //redux
-import {reset, getPokemonsFromApi, getPokemonByidApi} from '../../slices/pokemonSlice'
+import {reset} from '../../slices/pokemonSlice'
+import { getAllPokemons } from '../../slices/pokemonSlice';
 
 //hooks
 import { useEffect } from "react";
@@ -22,23 +23,12 @@ const Home = () => {
   message,
 } = useSelector((state)=>state.pokemon);
 
-  const getPokemons =  () =>{
-    let list = [];
-    for(let i = 1; i<10;i++){
-      
-    dispath(getPokemonByidApi(i));
-      
-      list.push(pokemon);
-    }
-
-    console.log(list);
-
-  }
-
+  console.log(pokemons)
 
   useEffect(()=>{
+    dispath(getAllPokemons());
     dispath(reset());
-  },[dispath]);
+  },[]);
 
   return (
     <div>
@@ -46,7 +36,7 @@ const Home = () => {
         <h2>Bem vindo ao Pokeworld!</h2>
         <Pokemonlist/>
         <div className="findMore">
-          {!loadingPokemon && <button onClick={getPokemons}>Carregar mais...</button>}
+          {!loadingPokemon && <button>Carregar mais...</button>}
           {loadingPokemon && <button disabled >Agurade...</button>}
         </div>
     </div>
