@@ -30,21 +30,28 @@
 
 .footer_card #name{
     padding-top: 0.5em;
+    padding-left: 4px;
     font-size: 1.4em;
     font-weight: bold;
+    text-transform: capitalize;
 }
 
 .footer_card .types{
     gap: 0.5em;
     display: flex;
-    padding: 0em 0em;
 }
 
 .footer_card .types li{
     list-style: none;
-    width: 5em;
+    width: 6em;
     text-align: center;
-    font-weight: 700;
-    border-radius: 5px;
-    padding: 0.1em .3em;
+    font-weight: 400;
+    border-radius: 3px;
+    font-size: 0.8em;
+    padding: 0.1em 0em;
+    text-transform: capitalize;
+}
+
+.footer_card #number {
+    padding-left: 4px;
 }

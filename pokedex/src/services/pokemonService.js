@@ -1,11 +1,11 @@
 import {urlApiPokedex} from '../environments/environment'
 
 
-const getAllPokemons = async () => {
+const getAllPokemons = async (limit,offset) => {
 
     try {
         
-        const data = await getPokemons();
+        const data = await getPokemons(limit,offset);
         
         const promises = data.results.map( async (pokemon) =>{
             return await getPokemonData(pokemon.url);
@@ -23,11 +23,11 @@ const getAllPokemons = async () => {
 }
 
 
-const getPokemons = async () => {
+const getPokemons = async (limit,offset) => {
 
     try {
         
-        const response = await fetch(`${urlApiPokedex}?limit=12&offset=0`)
+        const response = await fetch(`${urlApiPokedex}?limit=${limit}&offset=${offset}`)
 
         return await response.json();
 
@@ -66,9 +66,7 @@ const getPokemonData = async (url) =>{
 
 const pokemonService = {
     getPokemonByidApi,
-    getPokemonData,
     getAllPokemons,
-    getPokemons
 }
 
 export default pokemonService;

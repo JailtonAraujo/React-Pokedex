@@ -9,7 +9,7 @@ const Pokemonlist = ({pokemons}) => {
     <div className='contente-list'>
         <ul className="list">
           {pokemons && pokemons.map((pokemon)=>(
-            <li> <Pokemon poke={pokemon}/> </li>
+            <li> <Pokemon pokemon={pokemon}/> </li>
           ))}
         </ul>
     </div>

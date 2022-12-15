@@ -8,7 +8,7 @@ import {reset} from '../../slices/pokemonSlice'
 import { getAllPokemons } from '../../slices/pokemonSlice';
 
 //hooks
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from '../../components/loading/loading';
 
@@ -16,25 +16,22 @@ const Home = () => {
 
   const dispath = useDispatch();
 
-  const {pokemon,
+  const [offset, setOffset] = useState(0);
+
+  const {
   pokemons,
   error:errorPokemon,
   loading:loadingPokemon,
-  message,
 } = useSelector((state)=>state.pokemon);
 
-  console.log(pokemons)
-
   useEffect(()=>{
-    dispath(getAllPokemons());
+    dispath(getAllPokemons(12,offset));
     dispath(reset());
   },[]);
 
   return (
     <div>
-        {/* {loadingPokemon && <Loading/>} */}
-        <h2>Bem vindo ao Pokeworld!</h2>
-        <Pokemonlist/>
+        {pokemons && <Pokemonlist pokemons={pokemons}/>}
         <div className="findMore">
           {!loadingPokemon && <button>Carregar mais...</button>}
           {loadingPokemon && <button disabled >Agurade...</button>}

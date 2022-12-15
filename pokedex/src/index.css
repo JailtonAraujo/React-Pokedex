@@ -1,5 +1,9 @@
 *{padding: 0; margin: 0; box-sizing: border-box; font-family: sans-serif;}
 
+body{
+    background-color: #101010;
+}
+
 .container{
     min-height: 90vh;
     
@@ -7,7 +11,7 @@
 
 /*class types*/
 
-.glass{
+.grass{
     background-color: #9bcc50;
     color: #000;
 }

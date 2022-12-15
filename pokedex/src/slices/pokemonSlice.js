@@ -12,19 +12,10 @@ const initialState = {
 
 
 //Get All user from ApiPokemon
-export const getPokemons = createAsyncThunk("pokemon/All",
-async() =>{
-
-    const data = await pokemonService.getPokemons();
-
-    return data;
-
-});
-
 export const getAllPokemons = createAsyncThunk("pokemon/Alldata",
-async() =>{
+async(limit,offset) =>{
 
-    const data = await pokemonService.getAllPokemons();
+    const data = await pokemonService.getAllPokemons(limit,offset);
 
     return data;
 
@@ -44,15 +35,6 @@ async (idPokemon,thunkAPI)=>{
 
 });
 
-export const getPokemonData = createAsyncThunk("pokemon/byUri",
-async (url)=>{
-
-    const data = await pokemonService.getPokemonData(url);
-
-    return data;
-
-});
-
 //functions
 export const pokemonSlice = createSlice({
     name:"pokemon",
@@ -64,21 +46,7 @@ export const pokemonSlice = createSlice({
     },
 
     extraReducers:(builder) => {
-        builder.addCase( getPokemons.pending,(state)=>{
-            state.loading = true;
-            state.error = false;
-        }).addCase( getPokemons.fulfilled,(state,action)=>{
-            state.loading = false;
-            state.error = false;
-            state.success = true;
-            state.pokemons = action.payload;
-        }).addCase(getPokemons.rejected,(state,action)=>{
-            state.loading = false;
-            state.error=action.payload;
-            state.pokemons=[];
-        })
-
-
+        builder
         .addCase(getPokemonByidApi.pending,(state)=>{
             state.loading = true;
             state.error = false;
@@ -95,23 +63,6 @@ export const pokemonSlice = createSlice({
             state.pokemon = {}
             state.message = "erro ao buscar pokemon";
         } )
-
-        .addCase(getPokemonData.pending,(state)=>{
-            state.loading = true;
-            state.error = false;
-        }).addCase( getPokemonData.fulfilled,(state,action)=>{
-            state.loading = false;
-            state.error = false;
-            state.success = true;
-            state.pokemon = action.payload;
-            state.message = "Sucesso!";
-        }).addCase( getPokemonData.rejected,(state,action)=>{
-            state.loading = false;
-            state.error = action.payload;
-            state.success = false;
-            state.pokemon = {}
-            state.message = "erro ao buscar pokemon";
-        })
         
         .addCase(getAllPokemons.pending,(state)=>{
             state.loading = true;
