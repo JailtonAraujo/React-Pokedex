@@ -22,6 +22,14 @@ const getAllPokemons = async (limit,offset) => {
 
 }
 
+const nextPagePokemons = async (offset) =>{
+
+    const result = await getAllPokemons(8,offset);
+
+    return result;
+
+}
+
 
 const getPokemons = async (limit,offset) => {
 
@@ -67,6 +75,7 @@ const getPokemonData = async (url) =>{
 const pokemonService = {
     getPokemonByidApi,
     getAllPokemons,
+    nextPagePokemons
 }
 
 export default pokemonService;

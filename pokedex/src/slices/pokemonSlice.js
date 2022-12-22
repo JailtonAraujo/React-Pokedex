@@ -21,6 +21,15 @@ async(limit,offset) =>{
 
 });
 
+export const nextPagePokemons = createAsyncThunk("pokemon/nextPage",
+async(offset) =>{
+
+    const data = await pokemonService.nextPagePokemons(offset);
+
+    return data;
+
+});
+
 //Get pokemon by id from ApiPokemon
 export const getPokemonByidApi = createAsyncThunk("pokemon/byId",
 async (idPokemon,thunkAPI)=>{
@@ -74,6 +83,23 @@ export const pokemonSlice = createSlice({
             state.pokemons = action.payload;
             state.message = "Sucesso!";
         }).addCase( getAllPokemons.rejected,(state,action)=>{
+            state.loading = false;
+            state.error = action.payload;
+            state.success = false;
+            state.pokemons = {}
+            state.message = "erro ao buscar pokemon";
+        })
+
+        .addCase(nextPagePokemons.pending,(state)=>{
+            state.loading = true;
+            state.error = false;
+        }).addCase( nextPagePokemons.fulfilled,(state,action)=>{
+            state.loading = false;
+            state.error = false;
+            state.success = true;
+            state.pokemons = state.pokemons.concat(action.payload);
+            state.message = "Sucesso!";
+        }).addCase( nextPagePokemons.rejected,(state,action)=>{
             state.loading = false;
             state.error = action.payload;
             state.success = false;

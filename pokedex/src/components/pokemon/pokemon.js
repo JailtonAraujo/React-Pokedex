@@ -17,7 +17,11 @@ const Pokemon = ({pokemon}) => {
     }else if(id < 100){
       urlImage = `${urlImage}/0${id}.png`;
       setNumber(`0${id}`);
-  }
+    }else if (id >= 100){
+      urlImage = `${urlImage}/${id}.png`;
+      setNumber(id);
+    }
+
   setImg(urlImage);
 }
 

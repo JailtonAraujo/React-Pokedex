@@ -40,3 +40,63 @@ body{
     background-color: #729f3f;
     color:#fff;
 }
+
+.normal{
+    background-color: #a4acaf;
+    color: #000;
+}
+
+.electric{
+    background-color: #eed535;
+    color: #000;
+}
+
+.ground{
+    background: linear-gradient(to top, #ab9842 50%, #f7de3f 50%);
+    color: #000;
+}
+
+.fairy{
+    background-color: #fdb9e9;
+    color: #000;
+}
+
+.fighting{
+    background-color: #d56723;
+    color: #fff;
+}
+
+.psychic{
+    background-color: #f366b9;
+    color: #fff;
+}
+
+.rock{
+    background-color: #a38c21;
+    color: #fff;
+}
+
+.steel{
+    background-color: #9eb7b8;
+    color: #000;
+}
+
+.ice{
+    background-color: #51c4e7;
+    color: #000;
+}
+
+.ghost{
+    background-color: #7b62a3;
+    color: #fff;
+}
+
+.dragon{
+    background: linear-gradient(to top, #f16e57 50%,#53a4cf 50%);
+    color: #fff;
+}
+
+.dark{
+    background-color: #707070;
+    color: #fff;
+}

@@ -22,3 +22,15 @@
     color:#fff;
     background-color:#4169E1;
 }
+
+.btnBackToTop{
+    position: fixed;
+    bottom: 20px;
+    right: 33px;
+    cursor: pointer;
+    border: none;
+    border-radius: 100%;
+    background-color: #4169E1;
+    font-size: 1em;
+    padding: 1em 0.4em;
+}
