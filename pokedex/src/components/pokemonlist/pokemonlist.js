@@ -8,8 +8,8 @@ const Pokemonlist = ({pokemons}) => {
   return (
     <div className='contente-list'>
         <ul className="list">
-          {pokemons && pokemons.map((pokemon)=>(
-            <li> <Pokemon pokemon={pokemon}/> </li>
+          {pokemons && pokemons.map((pokemon, index)=>(
+            <li key={index} > <Pokemon pokemon={pokemon}/> </li>
           ))}
         </ul>
     </div>

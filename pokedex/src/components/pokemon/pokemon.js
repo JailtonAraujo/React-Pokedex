@@ -27,7 +27,7 @@ const Pokemon = ({pokemon}) => {
 
 useEffect(()=>{
   buildImage();
-},[])
+},[pokemon])
 
   return (
     <div className='card'>
@@ -43,8 +43,8 @@ useEffect(()=>{
             {pokemon.name}
           </p>
           <ul className="types">
-              { pokemon.types && pokemon.types.map((type)=>(
-                <li className={type.type.name}>{type.type.name}</li>
+              { pokemon.types && pokemon.types.map((type, index)=>(
+                <li key={index} className={type.type.name}>{type.type.name}</li>
               ))}
           </ul>
         </div>

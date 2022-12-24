@@ -30,6 +30,17 @@ async(offset) =>{
 
 });
 
+// find pokemon by name or ID
+export const searchPokemon = createAsyncThunk("pokemon/search",
+async(name) =>{
+
+    const data = await pokemonService.searchPokemon(name);
+
+    return data;
+
+});
+
+
 //Get pokemon by id from ApiPokemon
 export const getPokemonByidApi = createAsyncThunk("pokemon/byId",
 async (idPokemon,thunkAPI)=>{
@@ -104,6 +115,23 @@ export const pokemonSlice = createSlice({
             state.error = action.payload;
             state.success = false;
             state.pokemons = {}
+            state.message = "erro ao buscar pokemon";
+        })
+
+        .addCase(searchPokemon.pending,(state)=>{
+            state.loading = true;
+            state.error = false;
+        }).addCase( searchPokemon.fulfilled,(state,action)=>{
+            state.loading = false;
+            state.error = false;
+            state.success = true;
+            state.pokemon = action.payload
+            state.message = "Sucesso!";
+        }).addCase( searchPokemon.rejected,(state,action)=>{
+            state.loading = false;
+            state.error = action.payload;
+            state.success = false;
+            state.pokemon = {}
             state.message = "erro ao buscar pokemon";
         })
     }

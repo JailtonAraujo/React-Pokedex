@@ -6,7 +6,7 @@ import PokemonSearch from '../../components/pokemonSearch/pokemonSearch';
 
 //redux
 import {reset} from '../../slices/pokemonSlice'
-import { getAllPokemons, nextPagePokemons } from '../../slices/pokemonSlice';
+import { getAllPokemons, nextPagePokemons, searchPokemon } from '../../slices/pokemonSlice';
 
 //hooks
 import { useEffect, useState } from "react";
@@ -17,20 +17,25 @@ const Home = () => {
   const dispath = useDispatch();
 
   const [offset, setOffset] = useState(12);
+  const [search, setSearch] = useState('');
 
   const {
+  pokemon,
   pokemons,
   error:errorPokemon,
   loading:loadingPokemon,
 } = useSelector((state)=>state.pokemon);
 
   const nextPage = () =>{
-
    dispath(nextPagePokemons(offset));
-
    setOffset(offset+8);
-
   }
+
+  //received name search to pokemonSeachComponent for home(father)
+  const nameSearchPokemon = async (name)=>{
+    dispath(searchPokemon(name.toLowerCase()))
+  }
+
 
   useEffect(()=>{
     dispath(getAllPokemons(12, offset));
@@ -40,10 +45,10 @@ const Home = () => {
 
   return (
     <div>
-        <PokemonSearch/>
+        <PokemonSearch pokemon={pokemon} nameSearchPokemon={nameSearchPokemon}/>
         {pokemons && <Pokemonlist pokemons={pokemons}/>}
         <div className="findMore">
-          {!loadingPokemon && <button onClick={nextPage}>Carregar mais...</button>}
+          {!loadingPokemon && <button onClick={(e)=>{nextPage(e)}}>Carregar mais...</button>}
           {loadingPokemon && <button disabled >Aguarde...</button>}
         </div>
           <button onClick={()=>{window.scrollTo(0,0)}} className="btnBackToTop">Top</button>

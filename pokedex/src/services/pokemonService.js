@@ -72,10 +72,25 @@ const getPokemonData = async (url) =>{
     }
 }
 
+const searchPokemon = async (search) =>{
+
+    try {
+        
+        const response = await fetch(`${urlApiPokedex}/${search}`)
+
+        return  await response.json();
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
 const pokemonService = {
     getPokemonByidApi,
     getAllPokemons,
-    nextPagePokemons
+    nextPagePokemons,
+    searchPokemon
 }
 
 export default pokemonService;
