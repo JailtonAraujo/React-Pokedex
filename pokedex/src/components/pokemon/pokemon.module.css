@@ -1,9 +1,28 @@
 .card{
     width: 220px;
-    height: 320px;
+    
+    position: relative;
     background: linear-gradient(to left, #aaa 50%, #4169E1 50%);
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.favority{
+    position: absolute;
+    z-index: 10;
+    right: 5px;
+    top: 5px;
+    color: #FFD700;
+    font-size: 2em;
+    background:none;
+    border: none;
+    cursor: pointer;
+}
+
+.card:hover{
+    transform: scale(1.04);
 }
 
 .content{
@@ -32,6 +51,7 @@
     border-top-right-radius: 20px;
     border-bottom-left-radius:5px;
     border-bottom-right-radius:5px;
+    color: #000;
 }
 
 .footer_card #name{

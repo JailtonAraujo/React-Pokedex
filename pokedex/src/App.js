@@ -10,6 +10,7 @@ import Message from './components/message/message';
 
 //pages
 import Home from './Pages/home/home';
+import PokemonDetails from './Pages/pokemonDetails/pokemonDetails'
 
 import { useSelector } from 'react-redux';
 
@@ -28,6 +29,7 @@ function App() {
         <div className="container">
           <Routes>
             <Route path='/' element={<Home/>}/>
+            <Route path='/pokemon/datails/:id' element={<PokemonDetails/>}/>
           </Routes>
         </div>
         <Footer/>

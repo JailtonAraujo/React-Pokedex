@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import Pokemon from '../components/pokemon/pokemon';
 import pokemonService from '../services/pokemonService'
 
 const initialState = {
@@ -36,7 +37,7 @@ export const searchPokemon = createAsyncThunk("pokemon/search",
 
         const data = await pokemonService.searchPokemon(name);
 
-        if (data.status === 404) {
+        if (data.status === 404 || data.status === 500) {
             return thunkAPI.rejectWithValue(data);
         }
 
@@ -66,6 +67,7 @@ export const pokemonSlice = createSlice({
     reducers: {
         reset: (state) => {
             state.message = '';
+            state.pokemon = null;
         },
     },
 

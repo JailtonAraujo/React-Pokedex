@@ -55,7 +55,7 @@ const Home = () => {
           {!loadingPokemon && <button onClick={(e)=>{nextPage(e)}}>Carregar mais...</button>}
           {loadingPokemon && <button disabled >Aguarde...</button>}
         </div>
-          <button onClick={()=>{window.scrollTo(0,0)}} className="btnBackToTop">Top</button>
+          <button onClick={()=>{window.scrollTo(0,0)}} className="btnBackToTop">🢁</button>
     </div>
   )
 }

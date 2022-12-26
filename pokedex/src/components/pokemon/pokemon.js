@@ -1,9 +1,15 @@
 import styles from './pokemon.module.css'
 import { useState, useEffect } from 'react';
 
+//icons
+import {AiFillStar, AiOutlineStar } from 'react-icons/ai'
+
+import { Link } from 'react-router-dom';
+
 const Pokemon = ({pokemon}) => {
 
   const [number, setNumber] = useState('');
+  const [favority, setFavority] = useState(false);
 
   const buildNumber = async () =>{
     const id = pokemon.id;
@@ -22,6 +28,11 @@ useEffect(()=>{
 
   return (
     <div className={styles.card}>
+
+      <button className={styles.favority} title="Favoritar" onClick={()=>{setFavority(!favority)}}> 
+      { favority ? <AiFillStar/> : <AiOutlineStar/> } </button>
+
+      <Link to={`/pokemon/datails/${pokemon.id}`}>
       <div className={styles.content}>
         <div id={styles.pokemon_img}>
         <img src={pokemon.sprites.other["official-artwork"].front_default} alt="img_pokemon" />
@@ -40,6 +51,7 @@ useEffect(()=>{
           </ul>
         </div>
       </div>
+      </Link>
     </div>
   )
 }
