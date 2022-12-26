@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react'
 import styles from './pokemonSearch.css'
 
 import { FcSearch } from 'react-icons/fc'

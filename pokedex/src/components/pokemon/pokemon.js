@@ -1,4 +1,4 @@
-import styles from './pokemon.css'
+import styles from './pokemon.module.css'
 import { useState, useEffect } from 'react';
 
 const Pokemon = ({pokemon}) => {
@@ -21,19 +21,19 @@ useEffect(()=>{
 },[pokemon])
 
   return (
-    <div className='card'>
-      <div className="content">
-        <div id="pokemon_img">
+    <div className={styles.card}>
+      <div className={styles.content}>
+        <div id={styles.pokemon_img}>
         <img src={pokemon.sprites.other["official-artwork"].front_default} alt="img_pokemon" />
         </div>
-        <div className="footer_card">
-          <span id="number">
+        <div className={styles.footer_card}>
+          <span id={styles.number}>
             Nº {number}
           </span>
-          <p id="name">
+          <p id={styles.name}>
             {pokemon.name}
           </p>
-          <ul className="types">
+          <ul className={styles.types}>
               { pokemon.types && pokemon.types.map((type, index)=>(
                 <li key={index} className={type.type.name}>{type.type.name}</li>
               ))}
