@@ -1,4 +1,4 @@
-import styles from './pokemonSearch.css'
+import styles from './pokemonSearch.module.css'
 
 import { FcSearch } from 'react-icons/fc'
 
@@ -20,10 +20,10 @@ const PokemonSearch = ({pokemon,nameSearchPokemon}) => {
   } = useSelector((state)=>state.pokemon);
 
   return (
-    <div className='searchContainer'> 
+    <div className={styles.searchContainer}> 
     {errorPokemon && <Message msg={'Oops... Nunhum pokemon encontrado!'} type='error' />}
-        <div className="contentSearch">
-            <div className="search-field">
+        <div className={styles.contentSearch}>
+            <div className={styles.searchField}>
                 <input type="text" placeholder='busque por nome ou id...' onChange={(e)=>{setName(e.target.value)}} />
                 <button onClick={()=>{nameSearchPokemon(name)}} > <FcSearch/> </button>
             </div>
