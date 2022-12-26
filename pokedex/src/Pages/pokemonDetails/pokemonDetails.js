@@ -1,19 +1,43 @@
 import styles from './pokemonDetails.module.css'
 
+//hooks
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { searchPokemon } from '../../slices/pokemonSlice'
+import { useParams } from 'react-router-dom'
+
 const PokemonDetails = () => {
+
+  const dispath = useDispatch();
+
+  const {id:pokemonId} = useParams();
+
+  const {
+    pokemon,
+    error:errorPokemon,
+    loading:loadingPokemon,
+  } = useSelector((state)=>state.pokemon);
+
+
+  useEffect(()=>{
+    dispath(searchPokemon(pokemonId));
+  },[])
+
   return (
+    <>{ pokemon && 
     <div className='container'>
       <div className={styles.containerDatils}>
         <div className={styles.content}>
 
           <div className={styles.title}>
-            <h1>Venusaur Nº 003</h1>
+            <h1>{ `${pokemon.name} Nº ${pokemon.id}` }</h1>
           </div>
 
           <div className={styles.infoContainer}>
 
             <div className={styles.image}>
-              <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/003.png" alt="img_pokemon" />
+              <img src={pokemon.sprites.other["official-artwork"].front_default} alt="img_pokemon" />
             </div>
 
             <div className={styles.informations}>
@@ -29,11 +53,11 @@ const PokemonDetails = () => {
                       <ul>
                         <li>
                           <span className='attributeTitle'> Height: </span>
-                          <span className={styles.attributeValue}> attributeValue  </span>
+                          <span className={styles.attributeValue}> {(pokemon.height / 10).toFixed(1) } m  </span>
                         </li>
                         <li>
                           <span className='attributeTitle'> Weight: </span>
-                          <span className={styles.attributeValue}> attributeValue  </span>
+                          <span className={styles.attributeValue}>{(pokemon.weight / 10).toFixed(1)} Kg  </span>
                         </li>
                         <li>
                           <span className='attributeTitle'> Gender: </span>
@@ -68,6 +92,8 @@ const PokemonDetails = () => {
         </div>
       </div>
     </div>
+    }
+    </>
   )
 }
 

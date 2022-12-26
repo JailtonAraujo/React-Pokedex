@@ -41,6 +41,8 @@ export const searchPokemon = createAsyncThunk("pokemon/search",
             return thunkAPI.rejectWithValue(data);
         }
 
+        console.log(data)
+
         return data;
 
     });
