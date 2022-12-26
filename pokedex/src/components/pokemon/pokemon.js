@@ -3,37 +3,28 @@ import { useState, useEffect } from 'react';
 
 const Pokemon = ({pokemon}) => {
 
-  const [img, setImg] = useState('');
   const [number, setNumber] = useState('');
 
-  const buildImage = async () =>{
-
-    let urlImage = "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/";
+  const buildNumber = async () =>{
     const id = pokemon.id;
-
-    if(id < 10){
-      urlImage = `${urlImage}/00${id}.png`;
+    if(id < 10){  
       setNumber(`00${id}`);
     }else if(id < 100){
-      urlImage = `${urlImage}/0${id}.png`;
       setNumber(`0${id}`);
     }else if (id >= 100){
-      urlImage = `${urlImage}/${id}.png`;
       setNumber(id);
     }
-
-  setImg(urlImage);
 }
 
 useEffect(()=>{
-  buildImage();
+  buildNumber();
 },[pokemon])
 
   return (
     <div className='card'>
       <div className="content">
         <div id="pokemon_img">
-        <img src={img} alt="img_pokemon" />
+        <img src={pokemon.sprites.other["official-artwork"].front_default} alt="img_pokemon" />
         </div>
         <div className="footer_card">
           <span id="number">

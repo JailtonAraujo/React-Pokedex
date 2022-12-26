@@ -33,7 +33,11 @@ const Home = () => {
 
   //received name search to pokemonSeachComponent for home(father)
   const nameSearchPokemon = async (name)=>{
+    if(name){
     dispath(searchPokemon(name.toLowerCase()))
+    return
+    }
+    return
   }
 
 

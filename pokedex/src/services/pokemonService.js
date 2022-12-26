@@ -41,6 +41,7 @@ const getPokemons = async (limit,offset) => {
 
     } catch (error) {
         console.log(error);
+        return error
     }
 
 }
@@ -57,6 +58,7 @@ const getPokemonByidApi = async (idPokemon) =>{
         
     } catch (error) {
         console.log(error);
+        
     }
 }
 
@@ -76,12 +78,12 @@ const searchPokemon = async (search) =>{
 
     try {
         
-        const response = await fetch(`${urlApiPokedex}/${search}`)
+        const response = await fetch(`${urlApiPokedex}/${search}`);
 
         return  await response.json();
 
     } catch (error) {
-        console.log(error)
+        return error = {status:404, message:'pokemon not found', cause:error};
     }
 
 }
