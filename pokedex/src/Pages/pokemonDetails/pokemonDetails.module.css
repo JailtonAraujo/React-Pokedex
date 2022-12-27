@@ -25,6 +25,7 @@
     background-color:#1E90FF;
     padding: 0.2em 0.4em;
     border-radius: 5px;
+    text-transform: capitalize;
 } 
 
 .containerDatils .content .infoContainer{

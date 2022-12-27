@@ -74,7 +74,7 @@ const PokemonDetails = () => {
                         </li>
                         <li>
                           <span className='attributeTitle'> Abilities: </span>
-                          <span className={styles.attributeValue}> attributeValue  </span>
+                          <span className={styles.attributeValue}> {pokemon.abilities[0].ability.name}  </span>
                         </li>
                       </ul>      
                   </div>
