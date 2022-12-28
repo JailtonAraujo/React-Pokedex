@@ -12,17 +12,18 @@ import { getAllPokemons, nextPagePokemons, searchPokemon } from '../../slices/po
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+//icons
+import { FiCornerRightUp } from 'react-icons/fi'
+
 const Home = () => {
 
   const dispath = useDispatch();
 
   const [offset, setOffset] = useState(12);
-  const [search, setSearch] = useState('');
 
   const {
   pokemon,
   pokemons,
-  error:errorPokemon,
   loading:loadingPokemon,
 } = useSelector((state)=>state.pokemon);
 
@@ -55,7 +56,7 @@ const Home = () => {
           {!loadingPokemon && <button onClick={(e)=>{nextPage(e)}}>Carregar mais...</button>}
           {loadingPokemon && <button disabled >Aguarde...</button>}
         </div>
-          <button onClick={()=>{window.scrollTo(0,0)}} className="btnBackToTop">🢁</button>
+          <button onClick={()=>{window.scrollTo(0,0)}} className="btnBackToTop"><FiCornerRightUp/></button>
     </div>
   )
 }

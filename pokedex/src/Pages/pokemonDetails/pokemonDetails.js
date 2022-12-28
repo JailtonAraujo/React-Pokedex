@@ -4,8 +4,12 @@ import styles from './pokemonDetails.module.css'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { searchPokemon } from '../../slices/pokemonSlice'
-import { useParams } from 'react-router-dom'
+import { searchPokemon,getPokemonSpecies } from '../../slices/pokemonSlice'
+import { Link, useParams } from 'react-router-dom'
+
+//icons
+import {AiOutlineMan, AiOutlineWoman} from 'react-icons/ai'
+import { TiArrowBack } from 'react-icons/ti'
 
 const PokemonDetails = () => {
 
@@ -15,23 +19,25 @@ const PokemonDetails = () => {
 
   const {
     pokemon,
-    error:errorPokemon,
-    loading:loadingPokemon,
+    pokemonSpecie,
   } = useSelector((state)=>state.pokemon);
-
 
   useEffect(()=>{
     dispath(searchPokemon(pokemonId));
+    dispath(getPokemonSpecies(pokemonId));
   },[])
 
   return (
     <>{ pokemon && 
     <div className='container'>
       <div className={styles.containerDatils}>
-        <div className={styles.content}>
+
+        <fieldset className={styles.content}>
+
+          <legend><img src="https://cdn-icons-png.flaticon.com/512/1177/1177379.png" alt="" /></legend>
 
           <div className={styles.title}>
-            <h1>{ `${pokemon.name} Nº ${pokemon.id}` }</h1>
+            <h1  >{ `${pokemon.name} Nº ${pokemon.id}` }</h1>
           </div>
 
           <div className={styles.infoContainer}>
@@ -42,8 +48,16 @@ const PokemonDetails = () => {
 
             <div className={styles.informations}>
 
-              <div className={styles.flavorText}>
-                Its plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.
+              {pokemonSpecie && <div className={styles.flavorText}>
+                {  pokemonSpecie  }
+              </div>}
+
+              <div className={styles.types}>
+                <ul>
+                  { pokemon.types && pokemon.types.map((type, index)=>(
+                    <li key={index} className={type.type.name}>{type.type.name}</li>
+                  ))}
+                  </ul>
               </div>
 
               <div className={styles.specifications}>
@@ -61,17 +75,17 @@ const PokemonDetails = () => {
                         </li>
                         <li>
                           <span className='attributeTitle'> Gender: </span>
-                          <span className={styles.attributeValue}> attributeValue  </span>
+                          <span className={styles.attributeValue}> <AiOutlineMan/> <AiOutlineWoman/>  </span>
                         </li>
                       </ul>
                   </div>
 
                   <div className={styles.collumn02}>
                       <ul>
-                      <li>
+                      {/* <li>
                           <span className='attributeTitle'> Category: </span>
                           <span className={styles.attributeValue}> attributeValue  </span>
-                        </li>
+                        </li> */}
                         <li>
                           <span className='attributeTitle'> Abilities: </span>
                           <span className={styles.attributeValue}> {pokemon.abilities[0].ability.name}  </span>
@@ -84,12 +98,10 @@ const PokemonDetails = () => {
             </div>
 
           </div>
-
-          <div className="statsContainer">
-
-          </div>
-
-        </div>
+            <div className={styles.btnBack}>
+              <Link to={'/'} ><TiArrowBack/> Voltar</Link>
+            </div>              
+        </fieldset>
       </div>
     </div>
     }

@@ -11,8 +11,11 @@ import Message from './components/message/message';
 //pages
 import Home from './Pages/home/home';
 import PokemonDetails from './Pages/pokemonDetails/pokemonDetails'
+import Login from './Pages/auth/login';
 
 import { useSelector } from 'react-redux';
+import Register from './Pages/auth/register';
+
 
 function App() {
 
@@ -30,6 +33,8 @@ function App() {
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/pokemon/datails/:id' element={<PokemonDetails/>}/>
+            <Route path='/login' element={<Login/>} />
+            <Route path='/register' element={ <Register/> } />
           </Routes>
         </div>
         <Footer/>

@@ -6,12 +6,22 @@
 }
 
 .containerDatils .content{
-    width: 1000px;
+    width: 868px;
     padding: 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
     box-shadow: #00BFFF 0px 1px 2px 0px, #00BFFF 0px 2px 6px 2px;
+}
+
+.content legend{
+ text-align: center;
+}
+
+.content legend img{
+    overflow: auto;
+    width: 50px;
+    height: 50px;
 }
 
 .title{
@@ -23,6 +33,7 @@
 .title h1{
     font-size: 1.5em;
     background-color:#1E90FF;
+    box-shadow: #1E90FF 0px 0px 15px 5px;
     padding: 0.2em 0.4em;
     border-radius: 5px;
     text-transform: capitalize;
@@ -44,6 +55,8 @@
 
 .image img{
     overflow: auto;
+    width:383px;
+    height: 383px;
 }
 
 .infoContainer .informations{
@@ -55,6 +68,24 @@
     color: #fff;
 }
 
+.flavorText{
+    font-size: 1em;
+}
+
+.types ul{
+    display: flex;
+    gap: 1em;
+}
+
+.types li{
+    list-style: none;
+    padding: 0.3em 0.7em;
+    font-size: 1.2em;
+    border-radius: 14px;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
 .informations .specifications{
    background-color: #1E90FF;
    border-radius: 5px;
@@ -62,8 +93,8 @@
 }
 
 .informations .specifications .specificationsContent{
-
     display: flex;
+    padding:1em;
     justify-content: space-between;
 }
 
@@ -84,3 +115,63 @@
 .collumn01 ul li .attributeValue, .collumn02 ul li .attributeValue{
     color: #000;
 }
+
+.statsContainer{
+    border-radius: 10px;
+    background-color: #aaa;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.statsCollumn{
+    height: 100%;
+    display: flex;
+    gap: 0.2em;
+    background-color: #aaa;
+    padding: 0.5em;
+}
+
+.statsCollumn li{
+    background-color: #aaa;
+    width: 80px;
+    height: 100%;
+    list-style: none;
+}
+
+.statsCollumn span{
+    text-align: center;
+    font-size: 0.8em;
+    background-color: #aaa;
+}
+
+.statRow{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    background-color: #aaa;
+}
+
+.statRow li{
+    background-color: #fff;
+    list-style: none;
+    width: 100%;
+    height: 16px;
+    padding: 0.2em;
+}
+
+.btnBack {
+    width: 100%;
+    padding: 0em 0.8em;
+}
+
+.btnBack a{
+    background-color: #1E90FF;
+    color: #fff;
+    padding: 0.4em 1.4em;
+    text-align: center;
+    font-size: 1.2em;
+    border-radius: 5px;
+}
+

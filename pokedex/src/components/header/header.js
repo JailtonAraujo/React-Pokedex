@@ -2,6 +2,7 @@ import styles from'./header.css'
 import { Link } from 'react-router-dom'
 
 const header = () => {
+
   return (
     <nav className='navbar'>
       <fieldset>
@@ -11,8 +12,8 @@ const header = () => {
         </Link>
       </div>
       <ul className='links'>
-        <li>Entrar</li>
-        <li>Cadastrar</li>
+        <li><Link to="/login">Entrar</Link></li>
+        <li> <Link to="/register">Cadastrar</Link> </li>
       </ul>
       {/* <legend> <img src="https://cdn-icons-png.flaticon.com/512/287/287221.png" alt="" /></legend> */}
       </fieldset>

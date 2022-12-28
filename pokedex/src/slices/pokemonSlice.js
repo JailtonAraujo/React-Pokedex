@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import Pokemon from '../components/pokemon/pokemon';
 import pokemonService from '../services/pokemonService'
 
 const initialState = {
     pokemon: null,
     pokemons: [],
+    pokemonSpecie: null,
     message: null,
     error: false,
     success: false,
@@ -62,6 +62,28 @@ export const getPokemonByidApi = createAsyncThunk("pokemon/byId",
 
     });
 
+    export const getPokemonSpecies = createAsyncThunk("pokemon/species",
+    async (id, thunkAPI) => {
+
+        const data = await pokemonService.getPokemonSpecies(id);
+
+        if (data.status === 404 || data.status === 500) {
+            return thunkAPI.rejectWithValue(data);
+        }
+       
+        let flavor_text = ''
+
+       await data.flavor_text_entries.map((item)=>{
+            if(item.language.name === 'en'){
+                flavor_text = item.flavor_text;
+            }
+            return true;
+        })
+
+        return flavor_text;
+
+    });
+
 //functions
 export const pokemonSlice = createSlice({
     name: "pokemon",
@@ -70,6 +92,7 @@ export const pokemonSlice = createSlice({
         reset: (state) => {
             state.message = '';
             state.pokemon = null;
+            state.pokemonSpecie = null;
         },
     },
 
@@ -140,6 +163,23 @@ export const pokemonSlice = createSlice({
                 state.error = true;
                 state.success = false;
                 state.pokemon = null;
+                state.message = action.payload.message;
+            })
+
+            .addCase(getPokemonSpecies.pending, (state) => {
+                state.loading = true;
+                state.error = false;
+            }).addCase(getPokemonSpecies.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = false;
+                state.success = true;
+                state.pokemonSpecie = action.payload
+                state.message = "Sucesso!";
+            }).addCase(getPokemonSpecies.rejected, (state, action) => {
+                state.loading = false;
+                state.error = true;
+                state.success = false;
+                state.pokemonSpecie = null;
                 state.message = action.payload.message;
             })
     }

@@ -46,6 +46,22 @@ const getPokemons = async (limit,offset) => {
 
 }
 
+const getPokemonSpecies = async (id) =>{
+
+    const url = `https://pokeapi.co/api/v2/pokemon-species/${id}/`;
+
+    try {
+        
+        const response = await fetch(url);
+
+        return await response.json();
+
+
+    } catch (error) {
+        return error = {status:404, message:'pokemon not found', cause:error};
+    }
+}
+
 const getPokemonByidApi = async (idPokemon) =>{
     
     try {
@@ -92,7 +108,8 @@ const pokemonService = {
     getPokemonByidApi,
     getAllPokemons,
     nextPagePokemons,
-    searchPokemon
+    searchPokemon,
+    getPokemonSpecies
 }
 
 export default pokemonService;

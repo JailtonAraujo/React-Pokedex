@@ -16,7 +16,6 @@ const PokemonSearch = ({pokemon,nameSearchPokemon}) => {
   
   const {
     error:errorPokemon,
-    loading:loadingPokemon,
   } = useSelector((state)=>state.pokemon);
 
   return (
@@ -24,7 +23,7 @@ const PokemonSearch = ({pokemon,nameSearchPokemon}) => {
     {errorPokemon && <Message msg={'Oops... Nunhum pokemon encontrado!'} type='error' />}
         <div className={styles.contentSearch}>
             <div className={styles.searchField}>
-                <input type="text" placeholder='busque por nome ou id...' onChange={(e)=>{setName(e.target.value)}} />
+                <input type="text" placeholder='busque por nome ou id...' onChange={(e)=>{setName(e.target.value)}}  onKeyUp={(e)=>{if(e.keyCode === 13){nameSearchPokemon(name)} }} />
                 <button onClick={()=>{nameSearchPokemon(name)}} > <FcSearch/> </button>
             </div>
             { pokemon && <Pokemon pokemon={pokemon} />}
