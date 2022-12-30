@@ -41,8 +41,6 @@ export const searchPokemon = createAsyncThunk("pokemon/search",
             return thunkAPI.rejectWithValue(data);
         }
 
-        console.log(data)
-
         return data;
 
     });
@@ -104,6 +102,46 @@ export const getPokemonByidApi = createAsyncThunk("pokemon/byId",
     async (objSearch, thunkAPI) => {
 
         const data = await pokemonService.findAllPokemonsByUid(objSearch);
+
+        if (data.status === 404 || data.status === 500) {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+        return data;
+
+    });
+
+    export const nextPagePokemonsFirebase = createAsyncThunk("pokemon/nextPageFirebase",
+    async (pageable, thunkAPI) => {
+
+        const data = await pokemonService.nextPagePokemonsDb(pageable);
+
+        if (data.status === 404 || data.status === 500) {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+        return data;
+
+    });
+
+    // find pokemon by name from firebase
+    export const searchPokemonFromDb = createAsyncThunk("pokemon/search/db",
+    async (objSearch, thunkAPI) => {
+
+        const data = await pokemonService.searchPokemonDb(objSearch);
+
+        if (data.status === 404 || data.status === 500) {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+        return data;
+
+    });
+
+    export const deletePokemon = createAsyncThunk("pokemon/delete",
+    async (delObj, thunkAPI) => {
+
+        const data = await pokemonService.deletePokemonDb(delObj);
 
         if (data.status === 404 || data.status === 500) {
             return thunkAPI.rejectWithValue(data);
@@ -244,6 +282,58 @@ export const pokemonSlice = createSlice({
                 state.error = true;
                 state.success = false;
                 state.pokemons = [];
+                state.message = action.payload.message;
+            })
+
+            .addCase(nextPagePokemonsFirebase.pending, (state) => {
+                state.loading = true;
+                state.error = false;
+            }).addCase(nextPagePokemonsFirebase.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = false;
+                state.success = true;
+                state.pokemons = state.pokemons.concat(action.payload);
+                state.message = "Sucesso!";
+            }).addCase(nextPagePokemonsFirebase.rejected, (state, action) => {
+                state.loading = false;
+                state.error = true;
+                state.success = false;
+                state.pokemons = [];
+                state.message = action.payload.message;
+            })
+
+            .addCase(searchPokemonFromDb.pending, (state) => {
+                state.loading = true;
+                state.error = false;
+            }).addCase(searchPokemonFromDb.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = false;
+                state.success = true;
+                state.pokemon = action.payload
+                state.message = "Sucesso!";
+            }).addCase(searchPokemonFromDb.rejected, (state, action) => {
+                state.loading = false;
+                state.error = true;
+                state.success = false;
+                state.pokemon = null;
+                state.message = action.payload.message;
+            })
+
+            .addCase(deletePokemon.pending, (state) => {
+                state.loading = true;
+                state.error = false;
+            }).addCase(deletePokemon.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = false;
+                state.success = true;
+                state.pokemons = state.pokemons.filter((pok)=>(pok.id !== action.payload));
+                state.pokemon = null;
+                state.message = "Sucesso!";
+            }).addCase(deletePokemon.rejected, (state, action) => {
+                state.loading = false;
+                state.error = true;
+                state.success = false;
+                state.pokemon = null;
                 state.message = action.payload.message;
             })
     }

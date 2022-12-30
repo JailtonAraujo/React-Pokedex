@@ -1,10 +1,8 @@
 import styles from './pokemon.module.css'
 import { useState, useEffect } from 'react';
 
-import Message from '../message/message'
-
 //icons
-import {AiFillStar, AiOutlineStar } from 'react-icons/ai'
+import {AiFillStar, AiOutlineStar,AiFillDelete } from 'react-icons/ai'
 
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -12,7 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthValue } from '../../context/authContext'
 
 //slices
-import { favoritePokemon } from '../../slices/pokemonSlice'; 
+import { favoritePokemon, deletePokemon } from '../../slices/pokemonSlice'; 
 import { useDispatch } from 'react-redux';
 
 const Pokemon = ({pokemon,favorited}) => {
@@ -20,12 +18,10 @@ const Pokemon = ({pokemon,favorited}) => {
   const [number, setNumber] = useState('');
   const [favority, setFavority] = useState(false);
   const {user} = useAuthValue();
-  const [messageError, setMessageError] = useState('');
-
-  
 
   const dispath = useDispatch();
   const navigate = useNavigate();
+
 
   const buildNumber = async () =>{
     const id = pokemon.id;
@@ -56,6 +52,17 @@ const handlerfavorite = async () =>{
 
 }
 
+const handlerDelete = () =>{
+
+  const delObj = {
+    uid:user.uid,
+    id:pokemon.id
+  }
+
+  dispath(deletePokemon(delObj));
+
+}
+
 useEffect(()=>{
   setFavority(false)
   buildNumber();
@@ -63,13 +70,11 @@ useEffect(()=>{
 
   return (
     <div className={styles.card}>
-      <Message msg={messageError} type="error"/>
-
      { !favorited && <button className={styles.favority} title="Favoritar" onClick={handlerfavorite}> 
       { favority ? <AiFillStar/> : <AiOutlineStar/> } </button>}
 
-      {favorited && <button className={styles.favority} title="Remover" onClick={handlerfavorite}> 
-      {<AiFillStar/>} </button>}
+      {favorited && <button className={styles.remove} title="Remover" onClick={handlerDelete}> 
+      {<AiFillDelete/>} </button>}
 
       <Link to={`/pokemon/datails/${pokemon.id}`}>
       <div className={styles.content}>

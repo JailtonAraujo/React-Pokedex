@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 import Pokemon from '../pokemon/pokemon'
 import Message from '../message/message'
 
-const PokemonSearch = ({pokemon,nameSearchPokemon, favorited}) => {
+const PokemonSearch = ({pokemon,nameSearchPokemon, favorited, txtPlacehold}) => {
 
   const [name, setName] = useState('');
   
@@ -23,7 +23,7 @@ const PokemonSearch = ({pokemon,nameSearchPokemon, favorited}) => {
     {errorPokemon && <Message msg={'Oops... Nunhum pokemon encontrado!'} type='error' />}
         <div className={styles.contentSearch}>
             <div className={styles.searchField}>
-                <input type="text" placeholder='busque por nome ou id...' onChange={(e)=>{setName(e.target.value)}}  onKeyUp={(e)=>{if(e.keyCode === 13){nameSearchPokemon(name)} }} />
+                <input type="text" placeholder={txtPlacehold} onChange={(e)=>{setName(e.target.value)}}  onKeyUp={(e)=>{if(e.keyCode === 13){nameSearchPokemon(name)} }} />
                 <button onClick={()=>{nameSearchPokemon(name)}} > <FcSearch/> </button>
             </div>
             { pokemon && <Pokemon pokemon={pokemon} favorited={favorited}/>}

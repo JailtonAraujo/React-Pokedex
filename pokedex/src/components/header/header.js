@@ -1,5 +1,5 @@
 import styles from'./header.module.css'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 import { useAuthValue } from '../../context/authContext'
 import { getAuth, signOut } from 'firebase/auth'
@@ -24,14 +24,14 @@ const Header = () => {
       <ul className={styles.links}>
         
         { !user && <>
-        <li><Link to="/login">Entrar</Link></li>
-        <li> <Link to="/register">Cadastrar</Link> </li>
+        <li><NavLink to="/login" className={({isActive}) => (isActive ? styles.active : '')} >Entrar</NavLink></li>
+        <li> <NavLink to="/register" className={({isActive}) => (isActive ? styles.active : '')} >Cadastrar</NavLink> </li>
         </>}
 
         {user &&
         <>
         <li> <button onClick={logOut}>Sair</button> </li>
-        <li> <Link to="/pokemons/favorites">Favoritos</Link> </li>
+        <li> <NavLink to="/pokemons/favorites" className={({isActive}) => (isActive ? styles.active : '')} >Favoritos</NavLink> </li>
         </>
         }
 

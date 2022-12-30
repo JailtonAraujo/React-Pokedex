@@ -1,5 +1,5 @@
 import {urlApiPokedex} from '../environments/environment'
-import { collection, addDoc, Timestamp, query, where, orderBy, onSnapshot, QuerySnapshot, getDocs } from 'firebase/firestore';
+import { collection, addDoc, Timestamp, query, where, orderBy, getDocs, limit, startAfter, deleteDoc, doc} from 'firebase/firestore';
 import {db} from "../Firebase/config";
 
 
@@ -60,7 +60,7 @@ const getPokemonSpecies = async (id) =>{
 
 
     } catch (error) {
-        return error = {status:404, message:'pokemon not found', cause:error};
+        return {status:404, message:'pokemon not found', cause:error};
     }
 }
 
@@ -101,7 +101,7 @@ const searchPokemon = async (search) =>{
         return  await response.json();
 
     } catch (error) {
-        return error = {status:404, message:'pokemon not found', cause:error};
+        return {status:404, message:'pokemon not found', cause:error};
     }
 
 }
@@ -109,6 +109,18 @@ const searchPokemon = async (search) =>{
 const favoritePokemon = async (document) =>{
 
     try {
+
+        const collectionRef = collection (db,"pokemon");
+
+        const q = query(collectionRef, where("uid","==",document.uid), where("id","==",document.id));
+
+        const result = (await getDocs(q)).docs.map((doc)=>{
+            return {...doc.data()}
+        })
+
+        if(result.length > 0){
+            return {status:500, message:'pokemon ja favoritado!', cause:"pokemon already exists in your favorites!"};
+        }
 
         const newDocument = {...document, createdAt: Timestamp.now()};
         
@@ -120,7 +132,7 @@ const favoritePokemon = async (document) =>{
 
     } catch (error) {
         console.log(error)
-        return error = {status:500, message:'Erro ao favoritar pokemon!', cause:error};
+        return {status:500, message:'Erro ao favoritar pokemon!', cause:error};
     }
 
 }
@@ -132,7 +144,7 @@ const findAllPokemonsByUid = async ( objSearch ) =>{
     try {
 
         const q = query(collectionRef, where("uid","==",objSearch.uid),
-        orderBy("createdAt","desc"));
+        orderBy("createdAt","asc"),limit(12));
       
         const data = await getDocs(q);
 
@@ -148,10 +160,83 @@ const findAllPokemonsByUid = async ( objSearch ) =>{
 
     } catch (error) {
         console.log(error)
-        return error = {status:404, message:'Erro ao listar pokemons!', cause:error};
+        return {status:404, message:'Erro ao listar pokemons!', cause:error};
     }
 
 }
+
+const nextPagePokemonsDb = async (pageable) =>{
+    
+    const collectionRef = collection (db,"pokemon");
+
+    try {
+
+        const queryId = query(collectionRef, where("id","==",pageable.ref.id));
+        const lastPokemon = (await getDocs(queryId)).docs.map((doc)=>{
+            return {...doc.data()}
+        })
+
+        
+        const q = query(collectionRef, where("uid","==",pageable.uid),orderBy("createdAt","asc"),
+          startAfter(lastPokemon[0].createdAt) ,limit(12));
+
+          const promises = (await getDocs(q)).docs.map(async(doc)=>{
+
+            return await getPokemonData(`${urlApiPokedex}/${doc.data().id}`);
+
+          })
+
+          const result = await Promise.all(promises);
+
+         return result;
+
+    } catch (error) {
+        return {status:404, message:'Erro ao listar pokemons!', cause:error};
+    }
+}
+
+const searchPokemonDb = async (objSearch) =>{
+
+    const collectionRef = collection (db,"pokemon");
+    
+    try {
+        
+        const queryId = query(collectionRef, where("uid","==",objSearch.uid),where("name","==",objSearch.name))
+
+        const data = (await getDocs(queryId)).docs.map((doc)=>{
+           return {...doc.data()}
+        })
+
+        return await searchPokemon(data[0].name);
+
+    } catch (error) {
+        return  {status:404, message:'pokemon não encontrado', cause:error};
+    }
+
+}
+
+const deletePokemonDb = async (delObj) => {
+
+    const collectionRef = collection (db,"pokemon");
+
+    try {
+
+        const queryId = query(collectionRef, where("uid","==",delObj.uid),where("id","==",delObj.id))
+
+        const data = (await getDocs(queryId)).docs.map((doc)=>{
+           return {...doc.data(), id:doc.id}
+        })
+        
+        await deleteDoc(doc(collectionRef,data[0].id));
+
+        return delObj.id;
+
+    } catch (error) {
+        return  {status:500, message:'error in delete pokemon!', cause:error};
+    }
+
+}
+
 
 const pokemonService = {
     getPokemonByidApi,
@@ -160,7 +245,10 @@ const pokemonService = {
     searchPokemon,
     getPokemonSpecies,
     favoritePokemon,
-    findAllPokemonsByUid
+    findAllPokemonsByUid,
+    nextPagePokemonsDb,
+    searchPokemonDb,
+    deletePokemonDb
 }
 
 export default pokemonService;

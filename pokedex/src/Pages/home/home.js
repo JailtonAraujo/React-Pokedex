@@ -50,12 +50,12 @@ const Home = () => {
 
   return (
     <div>
-        <PokemonSearch pokemon={pokemon} nameSearchPokemon={nameSearchPokemon} favorited={false}/>
+        <PokemonSearch pokemon={pokemon} nameSearchPokemon={nameSearchPokemon} favorited={false} txtPlacehold="Busque por id ou nome..."/>
         
         <div className={styles.contente_list}>
         <ul className={styles.list}>
           {pokemons &&  pokemons && pokemons.map((pokemon, index) => (
-            <li key={index} > <Pokemon pokemon={pokemon} favorited={true}/> </li>
+            <li key={index} > <Pokemon pokemon={pokemon} favorited={false}/> </li>
           )) }
         </ul>
       </div>

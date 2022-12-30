@@ -6,7 +6,6 @@ import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import Footer from './components/footer/footer'
 import Header from  './components/header/header'
 import Loading from './components/loading/loading';
-import Message from './components/message/message';
 
 //pages
 import Home from './Pages/home/home';
@@ -42,7 +41,6 @@ function App() {
     <div className="App">
       <AuthProvider value={{user}}>
       {loadingPokemon && <Loading/>}
-      {<Message/>}
       <BrowserRouter>
         <Header/>
         <div className="container">

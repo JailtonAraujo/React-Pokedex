@@ -9,16 +9,23 @@
     transition: 0.3s;
 }
 
-.favority{
+.favority, .remove{
     position: absolute;
     z-index: 10;
     right: 5px;
     top: 5px;
-    color: #FFD700;
     font-size: 2em;
     background:none;
     border: none;
     cursor: pointer;
+}
+
+.favority{
+    color: #FFD700;
+}
+
+.remove{
+    color: #DC143C;
 }
 
 .card:hover{
