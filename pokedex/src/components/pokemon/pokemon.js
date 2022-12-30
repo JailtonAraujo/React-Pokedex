@@ -1,15 +1,31 @@
 import styles from './pokemon.module.css'
 import { useState, useEffect } from 'react';
 
+import Message from '../message/message'
+
 //icons
 import {AiFillStar, AiOutlineStar } from 'react-icons/ai'
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Pokemon = ({pokemon}) => {
+//context
+import { useAuthValue } from '../../context/authContext'
+
+//slices
+import { favoritePokemon } from '../../slices/pokemonSlice'; 
+import { useDispatch } from 'react-redux';
+
+const Pokemon = ({pokemon,favorited}) => {
 
   const [number, setNumber] = useState('');
   const [favority, setFavority] = useState(false);
+  const {user} = useAuthValue();
+  const [messageError, setMessageError] = useState('');
+
+  
+
+  const dispath = useDispatch();
+  const navigate = useNavigate();
 
   const buildNumber = async () =>{
     const id = pokemon.id;
@@ -22,15 +38,38 @@ const Pokemon = ({pokemon}) => {
     }
 }
 
+const handlerfavorite = async () =>{
+
+  if(user){
+    const document = {
+      uid:user.uid,
+      name:pokemon.name,
+      id:pokemon.id
+    }
+  
+    dispath(favoritePokemon(document));
+    setFavority(true);
+    return;
+  }
+
+  navigate('/login')
+
+}
+
 useEffect(()=>{
+  setFavority(false)
   buildNumber();
 },[pokemon])
 
   return (
     <div className={styles.card}>
+      <Message msg={messageError} type="error"/>
 
-      <button className={styles.favority} title="Favoritar" onClick={()=>{setFavority(!favority)}}> 
-      { favority ? <AiFillStar/> : <AiOutlineStar/> } </button>
+     { !favorited && <button className={styles.favority} title="Favoritar" onClick={handlerfavorite}> 
+      { favority ? <AiFillStar/> : <AiOutlineStar/> } </button>}
+
+      {favorited && <button className={styles.favority} title="Remover" onClick={handlerfavorite}> 
+      {<AiFillStar/>} </button>}
 
       <Link to={`/pokemon/datails/${pokemon.id}`}>
       <div className={styles.content}>

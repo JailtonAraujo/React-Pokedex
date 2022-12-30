@@ -1,4 +1,6 @@
 import {urlApiPokedex} from '../environments/environment'
+import { collection, addDoc, Timestamp, query, where, orderBy, onSnapshot, QuerySnapshot, getDocs } from 'firebase/firestore';
+import {db} from "../Firebase/config";
 
 
 const getAllPokemons = async (limit,offset) => {
@@ -104,12 +106,61 @@ const searchPokemon = async (search) =>{
 
 }
 
+const favoritePokemon = async (document) =>{
+
+    try {
+
+        const newDocument = {...document, createdAt: Timestamp.now()};
+        
+        const data = await addDoc(
+            collection(db,"pokemon"),newDocument
+        );
+
+        return data;
+
+    } catch (error) {
+        console.log(error)
+        return error = {status:500, message:'Erro ao favoritar pokemon!', cause:error};
+    }
+
+}
+
+const findAllPokemonsByUid = async ( objSearch ) =>{
+
+    const collectionRef = collection (db,"pokemon");
+
+    try {
+
+        const q = query(collectionRef, where("uid","==",objSearch.uid),
+        orderBy("createdAt","desc"));
+      
+        const data = await getDocs(q);
+
+      const promises = data.docs.map( async (doc)=>{
+
+           return await getPokemonData(`${urlApiPokedex}/${doc.data().id}`);
+
+        })
+
+        const results = await Promise.all(promises);
+
+        return results;
+
+    } catch (error) {
+        console.log(error)
+        return error = {status:404, message:'Erro ao listar pokemons!', cause:error};
+    }
+
+}
+
 const pokemonService = {
     getPokemonByidApi,
     getAllPokemons,
     nextPagePokemons,
     searchPokemon,
-    getPokemonSpecies
+    getPokemonSpecies,
+    favoritePokemon,
+    findAllPokemonsByUid
 }
 
 export default pokemonService;

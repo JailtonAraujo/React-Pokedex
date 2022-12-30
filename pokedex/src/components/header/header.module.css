@@ -2,6 +2,7 @@
     width: 100%;
     min-height: 7vh;
     background-color: #1E90FF;
+    padding: 0em 1em;
 }
 
 fieldset{
@@ -28,4 +29,18 @@ fieldset{
 
 .links li{
     list-style: none;
+}
+
+.links li button, a{
+    border: none;
+    font-weight: bold;
+    background:none;
+    color: #000;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.links li button:hover, a:hover{
+    color: #fff
 }

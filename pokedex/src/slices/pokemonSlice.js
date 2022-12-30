@@ -62,6 +62,7 @@ export const getPokemonByidApi = createAsyncThunk("pokemon/byId",
 
     });
 
+    //Get expecies pokemon and filter flavor text pokemon
     export const getPokemonSpecies = createAsyncThunk("pokemon/species",
     async (id, thunkAPI) => {
 
@@ -81,6 +82,34 @@ export const getPokemonByidApi = createAsyncThunk("pokemon/byId",
         })
 
         return flavor_text;
+
+    });
+
+    //save favorites pokemns in the firebase
+    export const favoritePokemon = createAsyncThunk("pokemon/favorite",
+    async (document, thunkAPI) => {
+
+        const data = await pokemonService.favoritePokemon(document)
+
+        if (data.errors) {
+            return thunkAPI.rejectWithValue(data.error);
+        }
+
+        return data;
+
+    });
+
+    //find pokemons bu uid at the firebase
+    export const findPokemonsByUid = createAsyncThunk("pokemon/byuid",
+    async (objSearch, thunkAPI) => {
+
+        const data = await pokemonService.findAllPokemonsByUid(objSearch);
+
+        if (data.status === 404 || data.status === 500) {
+            return thunkAPI.rejectWithValue(data);
+        }
+
+        return data;
 
     });
 
@@ -180,6 +209,41 @@ export const pokemonSlice = createSlice({
                 state.error = true;
                 state.success = false;
                 state.pokemonSpecie = null;
+                state.message = action.payload.message;
+            })
+
+            .addCase(favoritePokemon.pending, (state) => {
+                state.loading = true;
+                state.error = false;
+            }).addCase(favoritePokemon.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = false;
+                state.success = true;
+                state.pokemonSpecie = action.payload
+                state.message = "Sucesso!";
+            }).addCase(favoritePokemon.rejected, (state, action) => {
+                state.loading = false;
+                state.error = true;
+                state.success = false;
+                state.pokemonSpecie = null;
+                state.message = action.payload.message;
+            })
+
+            
+            .addCase(findPokemonsByUid.pending, (state) => {
+                state.loading = true;
+                state.error = false;
+            }).addCase(findPokemonsByUid.fulfilled, (state, action) => {
+                state.loading = false;
+                state.error = false;
+                state.success = true;
+                state.pokemons = action.payload
+                state.message = "Sucesso!";
+            }).addCase(findPokemonsByUid.rejected, (state, action) => {
+                state.loading = false;
+                state.error = true;
+                state.success = false;
+                state.pokemons = [];
                 state.message = action.payload.message;
             })
     }

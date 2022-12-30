@@ -1,14 +1,19 @@
 import styles from './auth.module.css'
 
 //hooks
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { registerUser, reset } from '../../slices/authSlice'
+import { useSelector, useDispatch } from 'react-redux';
 
 //icons
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 
+import Message from '../../components/message/message';
+
 const Register = () => {
 
+  const dispath = useDispatch();
 
   const [hide, setHide] = useState(true);
 
@@ -16,20 +21,31 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
+  const {
+    loading,
+    error,
+    message
+  } = useSelector((state)=>state.auth);
+
   const handlerSubmit = async (e) => {
     e.preventDefault();
 
     const user = {
-      name,
+      displayName:name,
       email,
       password
     }
 
-    console.log(user);
+    dispath(registerUser(user));
   }
+
+  useEffect(()=>{
+    dispath(reset());
+  },[])
 
   return (
     <div className='container'>
+      {error && <Message msg={message} type='error'/>}
     <div className={styles.container_auth}>
 
       <div className={styles.content}>
@@ -54,11 +70,15 @@ const Register = () => {
             <label htmlFor="password">Senha:</label>
             <div className={styles.password_field}>
               <input type={ hide ? 'password' : 'text' } placeholder='Informe sua senha...' name='password' onChange={(e) => { setPassword(e.target.value) }} />
+
               <button onClick={()=>{setHide(!hide)}} type="button"> { hide ? <AiFillEyeInvisible/> :<AiFillEye/> } </button>
+
             </div>
           </div>
 
-          <input type="submit" value="Enviar" />
+          {!loading && <input type="submit" value="Enviar" />}
+          {loading && <input type="submit" value="Aguarde..." disabled />}
+
 
         </form>
         <div className={styles.bottom_text}> <Link to="/login"> Já tenho uma conta! </Link> </div>

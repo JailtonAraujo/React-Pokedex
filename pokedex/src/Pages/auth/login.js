@@ -1,11 +1,18 @@
 import styles from './auth.module.css'
 
 //hooks
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+//slice
+import { login, reset } from '../../slices/authSlice';
 
 //icons
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
+
+//components
+import Message from '../../components/message/message';
 
 const Login = () => {
 
@@ -13,6 +20,14 @@ const Login = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const dispath = useDispatch();
+
+  const {
+    loading:loadingAuth,
+    error,
+    message,
+  } = useSelector((state)=>state.auth);
 
   const handlerSubmit = async (e) => {
     e.preventDefault();
@@ -22,12 +37,17 @@ const Login = () => {
       password
     }
 
-    console.log(user);
+    dispath(login(user));
 
   }
 
+  useEffect(()=>{
+    dispath(reset());
+  },[])
+
   return (
     <div className='container'>
+      {error && <Message msg={message} type='error'/>}
       <div className={styles.container_auth}>
 
         <div className={styles.content}>
@@ -50,7 +70,8 @@ const Login = () => {
               </div>
             </div>
 
-            <input type="submit" value="Login" />
+            {!loadingAuth && <input type="submit" value="Login" />}
+            {loadingAuth && <input type="submit" value="Aguarde..." disabled/>}
 
           </form>
           <div className={styles.bottom_text}> <Link to="/register"> Cadastre-se agora! </Link> </div>

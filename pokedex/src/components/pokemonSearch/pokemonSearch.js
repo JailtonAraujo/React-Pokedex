@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 import Pokemon from '../pokemon/pokemon'
 import Message from '../message/message'
 
-const PokemonSearch = ({pokemon,nameSearchPokemon}) => {
+const PokemonSearch = ({pokemon,nameSearchPokemon, favorited}) => {
 
   const [name, setName] = useState('');
   
@@ -26,7 +26,7 @@ const PokemonSearch = ({pokemon,nameSearchPokemon}) => {
                 <input type="text" placeholder='busque por nome ou id...' onChange={(e)=>{setName(e.target.value)}}  onKeyUp={(e)=>{if(e.keyCode === 13){nameSearchPokemon(name)} }} />
                 <button onClick={()=>{nameSearchPokemon(name)}} > <FcSearch/> </button>
             </div>
-            { pokemon && <Pokemon pokemon={pokemon} />}
+            { pokemon && <Pokemon pokemon={pokemon} favorited={favorited}/>}
         </div>
     </div>
   )

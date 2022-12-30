@@ -1,7 +1,7 @@
-import syles from './home.css'
+import styles from './home.module.css'
 
 //components
-import Pokemonlist from '../../components/pokemonlist/pokemonlist'
+import Pokemon from '../../components/pokemon/pokemon';
 import PokemonSearch from '../../components/pokemonSearch/pokemonSearch';
 
 //redux
@@ -50,13 +50,21 @@ const Home = () => {
 
   return (
     <div>
-        <PokemonSearch pokemon={pokemon} nameSearchPokemon={nameSearchPokemon}/>
-        {pokemons && <Pokemonlist pokemons={pokemons}/>}
-        <div className="findMore">
+        <PokemonSearch pokemon={pokemon} nameSearchPokemon={nameSearchPokemon} favorited={false}/>
+        
+        <div className={styles.contente_list}>
+        <ul className={styles.list}>
+          {pokemons &&  pokemons && pokemons.map((pokemon, index) => (
+            <li key={index} > <Pokemon pokemon={pokemon} favorited={true}/> </li>
+          )) }
+        </ul>
+      </div>
+
+        <div className={styles.findMore}>
           {!loadingPokemon && <button onClick={(e)=>{nextPage(e)}}>Carregar mais...</button>}
           {loadingPokemon && <button disabled >Aguarde...</button>}
         </div>
-          <button onClick={()=>{window.scrollTo(0,0)}} className="btnBackToTop"><FiCornerRightUp/></button>
+          <button onClick={()=>{window.scrollTo(0,0)}} className={styles.btnBackToTop}><FiCornerRightUp/></button>
     </div>
   )
 }
