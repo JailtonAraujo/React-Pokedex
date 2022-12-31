@@ -18,7 +18,7 @@ const Header = () => {
       <fieldset>
       <div className={styles.brand}>
         <Link to="/">
-        <img src="https://cdn-icons-png.flaticon.com/512/287/287221.png" alt="" />
+        <img src="/pokedex/pokebola.png" alt="" />
         </Link>
       </div>
       <ul className={styles.links}>

@@ -2,7 +2,8 @@ import styles from './pokemon.module.css'
 import { useState, useEffect } from 'react';
 
 //icons
-import {AiFillStar, AiOutlineStar,AiFillDelete } from 'react-icons/ai'
+import {AiFillStar, AiOutlineStar } from 'react-icons/ai'
+import { TiDelete } from 'react-icons/ti'
 
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -74,7 +75,7 @@ useEffect(()=>{
       { favority ? <AiFillStar/> : <AiOutlineStar/> } </button>}
 
       {favorited && <button className={styles.remove} title="Remover" onClick={handlerDelete}> 
-      {<AiFillDelete/>} </button>}
+      {<TiDelete/>} </button>}
 
       <Link to={`/pokemon/datails/${pokemon.id}`}>
       <div className={styles.content}>

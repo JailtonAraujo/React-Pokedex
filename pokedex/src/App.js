@@ -13,6 +13,7 @@ import PokemonDetails from './Pages/pokemonDetails/pokemonDetails'
 import Login from './Pages/auth/login';
 import Register from './Pages/auth/register';
 import Favorites from './Pages/favorites/favorites';
+import PageNotFound from './Pages/pageNotFound/pageNotFound';
 
 //hooks
 import { useSelector } from 'react-redux';
@@ -41,10 +42,10 @@ function App() {
     <div className="App">
       <AuthProvider value={{user}}>
       {loadingPokemon && <Loading/>}
-      <BrowserRouter>
+      <BrowserRouter basename='/pokedex/'>
         <Header/>
         <div className="container">
-          <Routes>
+          <Routes >
             <Route path='/' element={<Home/>}/>
 
             <Route path='/pokemon/datails/:id' element={<PokemonDetails/>}/>
@@ -54,6 +55,9 @@ function App() {
             <Route path='/register' element={ !user ? <Register/> : <Navigate to="/"/> } />
 
             <Route path='/pokemons/favorites' element={ user ? <Favorites/> : <Navigate to="/login"/> } />
+
+            <Route path='*' element={<PageNotFound/>}/>
+
           </Routes>
         </div>
         <Footer/>

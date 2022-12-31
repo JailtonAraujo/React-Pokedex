@@ -175,3 +175,16 @@
     border-radius: 5px;
 }
 
+
+@media (max-width:900px){
+    .containerDatils .content .infoContainer{
+        flex-direction: column;
+    }
+
+    .image img{
+        overflow: auto;
+        width:100%;
+        height: auto;
+    }
+}
+

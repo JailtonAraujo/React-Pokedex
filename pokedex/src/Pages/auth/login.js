@@ -37,6 +37,10 @@ const Login = () => {
       password
     }
 
+    if(!email || !password){
+      return;
+    }
+
     dispath(login(user));
 
   }
@@ -48,8 +52,8 @@ const Login = () => {
   return (
     <div className='container'>
       {error && <Message msg={message} type='error'/>}
+      <h2 className={styles.msgHero}>Faça login para favoritar pokemons!</h2>
       <div className={styles.container_auth}>
-
         <div className={styles.content}>
 
           <div className={styles.title}>

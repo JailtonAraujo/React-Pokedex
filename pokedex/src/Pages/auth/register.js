@@ -36,6 +36,10 @@ const Register = () => {
       password
     }
 
+    if(!email || !name || !password){
+      return;
+    }
+
     dispath(registerUser(user));
   }
 
@@ -46,6 +50,7 @@ const Register = () => {
   return (
     <div className='container'>
       {error && <Message msg={message} type='error'/>}
+      <h2 className={styles.msgHero}>Cadastre-se para favoritar pokemons!</h2>
     <div className={styles.container_auth}>
 
       <div className={styles.content}>

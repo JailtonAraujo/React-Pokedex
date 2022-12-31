@@ -1,9 +1,9 @@
-import styles from './footer.css'
+import styles from './footer.module.css'
 
 const footer = () => {
   return (
-    <fieldset className='footer'>
-       <legend><img src="https://cdn-icons-png.flaticon.com/512/287/287221.png" alt="" /></legend>
+    <fieldset className={styles.footer}>
+       <legend><img src="/pokedex/pokebola.png" alt="" /></legend>
         <p>
           Pokedex &copy; 2022
         </p>

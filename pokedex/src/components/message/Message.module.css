@@ -43,3 +43,10 @@
     border: 2px solid #008000;
     color: #fff;
 }
+
+@media (max-width:900px){
+    .content{
+        width: 97%;
+       
+    }
+}

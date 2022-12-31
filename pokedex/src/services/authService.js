@@ -1,5 +1,3 @@
-import { db } from '../Firebase/config'
-
 import {
     getAuth, 
     createUserWithEmailAndPassword,

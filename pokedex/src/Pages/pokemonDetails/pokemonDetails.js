@@ -34,7 +34,7 @@ const PokemonDetails = () => {
 
         <fieldset className={styles.content}>
 
-          <legend><img src="https://cdn-icons-png.flaticon.com/512/1177/1177379.png" alt="" /></legend>
+          <legend><img src="/pokedex/pokebola_details.png" alt="" /></legend>
 
           <div className={styles.title}>
             <h1  >{ `${pokemon.name} Nº ${pokemon.id}` }</h1>
