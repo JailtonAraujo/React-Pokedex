@@ -43,7 +43,7 @@ const PokemonDetails = () => {
           <div className={styles.infoContainer}>
 
             <div className={styles.image}>
-              <img src={pokemon.sprites.other["official-artwork"].front_default} alt="img_pokemon" />
+              <img src={pokemon.image} alt="img_pokemon" />
             </div>
 
             <div className={styles.informations}>
@@ -88,7 +88,7 @@ const PokemonDetails = () => {
                         </li> */}
                         <li>
                           <span className='attributeTitle'> Abilities: </span>
-                          <span className={styles.attributeValue}> {pokemon.abilities[0].ability.name}  </span>
+                          <span className={styles.attributeValue}> {pokemon.ability}  </span>
                         </li>
                       </ul>      
                   </div>

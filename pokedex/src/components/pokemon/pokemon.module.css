@@ -90,3 +90,40 @@
 .footer_card #number {
     padding-left: 4px;
 }
+
+@media(max-width:1030px){
+
+    .card{
+        width: 100%;
+    }
+
+    #pokemon_img img{
+        overflow: auto;
+        width: 280px;
+    }
+}
+
+@media(max-width:945px){
+
+    .card{
+        width: 100%;
+    }
+
+    #pokemon_img img{
+        overflow: auto;
+        width: 430px;
+    }
+}
+
+
+@media(max-width:475px){
+
+    .card{
+        width: 100%;
+    }
+
+    #pokemon_img img{
+        overflow: auto;
+        width: 100%;
+    }
+}

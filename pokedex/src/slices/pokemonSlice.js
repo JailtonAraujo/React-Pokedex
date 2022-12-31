@@ -18,7 +18,15 @@ export const getAllPokemons = createAsyncThunk("pokemon/Alldata",
 
         const data = await pokemonService.getAllPokemons(limit, offset);
 
-        return data;
+        const list = data.map((element)=>{
+            return {
+                name:element.name,
+                id:element.id, 
+                types:element.types, 
+                image:element.sprites.other["official-artwork"].front_default}
+        })
+
+        return list;
 
     });
 
@@ -27,7 +35,15 @@ export const nextPagePokemons = createAsyncThunk("pokemon/nextPage",
 
         const data = await pokemonService.nextPagePokemons(offset);
 
-        return data;
+        const list = data.map((element)=>{
+            return {
+                name:element.name,
+                id:element.id, 
+                types:element.types, 
+                image:element.sprites.other["official-artwork"].front_default}
+        })
+
+        return list;
 
     });
 
@@ -41,7 +57,17 @@ export const searchPokemon = createAsyncThunk("pokemon/search",
             return thunkAPI.rejectWithValue(data);
         }
 
-        return data;
+        const result = {
+            name:data.name,
+            id:data.id,
+            types:data.types, 
+            image:data.sprites.other["official-artwork"].front_default, 
+            ability:data.abilities[0].ability.name,
+            height:data.height,
+            weight:data.weight
+            }
+
+        return result;
 
     });
 
@@ -83,7 +109,7 @@ export const getPokemonByidApi = createAsyncThunk("pokemon/byId",
 
     });
 
-    //save favorites pokemns in the firebase
+    //save favorites pokemons in the firebase
     export const favoritePokemon = createAsyncThunk("pokemon/favorite",
     async (document, thunkAPI) => {
 
@@ -112,9 +138,9 @@ export const getPokemonByidApi = createAsyncThunk("pokemon/byId",
     });
 
     export const nextPagePokemonsFirebase = createAsyncThunk("pokemon/nextPageFirebase",
-    async (pageable, thunkAPI) => {
+    async (docRef, thunkAPI) => {
 
-        const data = await pokemonService.nextPagePokemonsDb(pageable);
+        const data = await pokemonService.nextPagePokemonsDb(docRef);
 
         if (data.status === 404 || data.status === 500) {
             return thunkAPI.rejectWithValue(data);
@@ -139,9 +165,9 @@ export const getPokemonByidApi = createAsyncThunk("pokemon/byId",
     });
 
     export const deletePokemon = createAsyncThunk("pokemon/delete",
-    async (delObj, thunkAPI) => {
+    async (pokemonToDel, thunkAPI) => {
 
-        const data = await pokemonService.deletePokemonDb(delObj);
+        const data = await pokemonService.deletePokemonDb(pokemonToDel);
 
         if (data.status === 404 || data.status === 500) {
             return thunkAPI.rejectWithValue(data);

@@ -38,11 +38,7 @@ const Pokemon = ({pokemon,favorited}) => {
 const handlerfavorite = async () =>{
 
   if(user){
-    const document = {
-      uid:user.uid,
-      name:pokemon.name,
-      id:pokemon.id
-    }
+    const document = {...pokemon, uid:user.uid}
   
     dispath(favoritePokemon(document));
     setFavority(true);
@@ -55,12 +51,13 @@ const handlerfavorite = async () =>{
 
 const handlerDelete = () =>{
 
-  const delObj = {
-    uid:user.uid,
-    id:pokemon.id
+  const pokemonToDel ={
+    id:pokemon.id,
+    idDoc:pokemon.idDoc
   }
+ 
 
-  dispath(deletePokemon(delObj));
+  dispath(deletePokemon(pokemonToDel));
 
 }
 
@@ -80,7 +77,7 @@ useEffect(()=>{
       <Link to={`/pokemon/datails/${pokemon.id}`}>
       <div className={styles.content}>
         <div id={styles.pokemon_img}>
-        <img src={pokemon.sprites.other["official-artwork"].front_default} alt="img_pokemon" />
+        <img src={pokemon.image} alt="img_pokemon" />
         </div>
         <div className={styles.footer_card}>
           <span id={styles.number}>

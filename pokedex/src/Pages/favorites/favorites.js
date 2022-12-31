@@ -47,12 +47,9 @@ const Favorites = () => {
 
   const nextPage = async () =>{
 
-    const pageable = {
-      uid:user.uid,
-      ref:pokemons[(pokemons.length-1)]
-    }
+    const docRef = pokemons[(pokemons.length-1)];
 
-    dispath(nextPagePokemonsFirebase(pageable));
+    dispath(nextPagePokemonsFirebase(docRef));
 
   }
 

@@ -124,11 +124,11 @@ const favoritePokemon = async (document) =>{
 
         const newDocument = {...document, createdAt: Timestamp.now()};
         
-        const data = await addDoc(
+        addDoc(
             collection(db,"pokemon"),newDocument
         );
 
-        return data;
+        return document;
 
     } catch (error) {
         console.log(error)
@@ -136,6 +136,7 @@ const favoritePokemon = async (document) =>{
     }
 
 }
+
 
 const findAllPokemonsByUid = async ( objSearch ) =>{
 
@@ -146,17 +147,11 @@ const findAllPokemonsByUid = async ( objSearch ) =>{
         const q = query(collectionRef, where("uid","==",objSearch.uid),
         orderBy("createdAt","asc"),limit(12));
       
-        const data = await getDocs(q);
+        const data = (await getDocs(q)).docs.map((doc)=>{
+            return {...doc.data(), idDoc:doc.id}
+        });
 
-      const promises = data.docs.map( async (doc)=>{
-
-           return await getPokemonData(`${urlApiPokedex}/${doc.data().id}`);
-
-        })
-
-        const results = await Promise.all(promises);
-
-        return results;
+        return data;
 
     } catch (error) {
         console.log(error)
@@ -165,30 +160,21 @@ const findAllPokemonsByUid = async ( objSearch ) =>{
 
 }
 
-const nextPagePokemonsDb = async (pageable) =>{
+
+const nextPagePokemonsDb = async (docRef) =>{
     
     const collectionRef = collection (db,"pokemon");
 
     try {
+  
+        const q = query(collectionRef, where("uid","==",docRef.uid),orderBy("createdAt","asc"),
+          startAfter(docRef.createdAt) ,limit(12));
 
-        const queryId = query(collectionRef, where("id","==",pageable.ref.id));
-        const lastPokemon = (await getDocs(queryId)).docs.map((doc)=>{
-            return {...doc.data()}
-        })
+          const data = (await getDocs(q)).docs.map((doc)=>{
+            return {...doc.data(), idDoc:doc.id}
+        });
 
-        
-        const q = query(collectionRef, where("uid","==",pageable.uid),orderBy("createdAt","asc"),
-          startAfter(lastPokemon[0].createdAt) ,limit(12));
-
-          const promises = (await getDocs(q)).docs.map(async(doc)=>{
-
-            return await getPokemonData(`${urlApiPokedex}/${doc.data().id}`);
-
-          })
-
-          const result = await Promise.all(promises);
-
-         return result;
+        return data;
 
     } catch (error) {
         return {status:404, message:'Erro ao listar pokemons!', cause:error};
@@ -204,10 +190,12 @@ const searchPokemonDb = async (objSearch) =>{
         const queryId = query(collectionRef, where("uid","==",objSearch.uid),where("name","==",objSearch.name))
 
         const data = (await getDocs(queryId)).docs.map((doc)=>{
-           return {...doc.data()}
+           return {...doc.data(), idDoc:doc.id}
         })
 
-        return await searchPokemon(data[0].name);
+        console.log(data)
+
+        return data[0];
 
     } catch (error) {
         return  {status:404, message:'pokemon não encontrado', cause:error};
@@ -215,21 +203,16 @@ const searchPokemonDb = async (objSearch) =>{
 
 }
 
-const deletePokemonDb = async (delObj) => {
+const deletePokemonDb = async (pokemonToDel) => {
 
     const collectionRef = collection (db,"pokemon");
 
     try {
 
-        const queryId = query(collectionRef, where("uid","==",delObj.uid),where("id","==",delObj.id))
-
-        const data = (await getDocs(queryId)).docs.map((doc)=>{
-           return {...doc.data(), id:doc.id}
-        })
         
-        await deleteDoc(doc(collectionRef,data[0].id));
+        deleteDoc(doc(collectionRef,pokemonToDel.idDoc));
 
-        return delObj.id;
+        return pokemonToDel.id;
 
     } catch (error) {
         return  {status:500, message:'error in delete pokemon!', cause:error};
